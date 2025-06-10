@@ -23,7 +23,8 @@ def preprocess_data():
     df.to_parquet('/opt/airflow/data/df_clean.parquet')
 
 def train_model():
-    mlflow.set_tracking_uri("http://127.0.0.1:5000")
+    mlflow.set_tracking_uri("file:/opt/airflow/mlruns")
+    mlflow.set_experiment("Default") 
     df = pd.read_parquet('/opt/airflow/data/df_clean.parquet')
     dv = DictVectorizer()
     train_dicts = df[['PULocationID', 'DOLocationID']].to_dict(orient='records')
